@@ -3,7 +3,7 @@ package customClasses;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Person implements Serializable {
+public class Person implements Comparable<Person>, Serializable {
     private final boolean gender;
     private final int age;
     private final String surname;
@@ -50,6 +50,12 @@ public class Person implements Serializable {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    // по фамилии
+    @Override
+    public int compareTo(Person o) {
+        return this.surname.compareTo(o.surname);
     }
 
     public static class Builder {

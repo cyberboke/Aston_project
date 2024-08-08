@@ -5,7 +5,7 @@ import customClasses.enums.Material;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Barrel implements Serializable {
+public class Barrel implements Comparable<Barrel>, Serializable {
     private final int volume;
     private final String storedMaterial;
     private final Material material;
@@ -52,6 +52,12 @@ public class Barrel implements Serializable {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    // по объему
+    @Override
+    public int compareTo(Barrel o) {
+        return Integer.compare(this.volume, o.volume);
     }
 
     public static class Builder {

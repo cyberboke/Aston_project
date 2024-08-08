@@ -6,19 +6,19 @@ import java.io.Serializable;
 import java.util.Objects;
 
 
-public class Animal implements Serializable {
-    private final String string;
+public class Animal implements Comparable<Animal>, Serializable {
+    private final String kind;
     private final EyeColor eyeColor;
     private final boolean hair;
 
     private Animal(String string, EyeColor eyeColor, boolean hair) {
-        this.string = string;
+        this.kind = string;
         this.eyeColor = eyeColor;
         this.hair = hair;
     }
 
     public String getKind() {
-        return string;
+        return kind;
     }
 
     public EyeColor getEyeColor() {
@@ -34,21 +34,27 @@ public class Animal implements Serializable {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
         Animal animal = (Animal) object;
-        return hair == animal.hair && Objects.equals(string, animal.string) && eyeColor == animal.eyeColor;
+        return hair == animal.hair && Objects.equals(kind, animal.kind) && eyeColor == animal.eyeColor;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(string, eyeColor, hair);
+        return Objects.hash(kind, eyeColor, hair);
     }
 
     @Override
     public String toString() {
         return "Animal{" +
-                "string='" + string + '\'' +
+                "string='" + kind + '\'' +
                 ", eyeColor=" + eyeColor +
                 ", hair=" + hair +
                 '}';
+    }
+
+    // по виду
+    @Override
+    public int compareTo(Animal o) {
+        return this.kind.compareTo(o.kind);
     }
 
     public static Builder builder() {

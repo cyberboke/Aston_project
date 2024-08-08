@@ -9,7 +9,6 @@ public class Main {
         // для понимания инициализируем наши фабрики и потом с помощью них создаем объект на выбор
         // Создание случайного животного
         RandomCreatable<Animal> animalFactory = (RandomCreatable<Animal>) RandomFactory.getFactory("animal");
-
         Animal randomAnimal = animalFactory.createRandom();
         Animal randomAnimal2 = animalFactory.createRandom();
         System.out.println(randomAnimal);
