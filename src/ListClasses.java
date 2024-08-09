@@ -2,9 +2,7 @@ import customClasses.Animal;
 import customClasses.Barrel;
 import customClasses.Person;
 import customClasses.enums.Classes;
-import customClasses.factory.AnimalFactory;
-import customClasses.factory.BarrelFactory;
-import customClasses.factory.PersonFactory;
+
 import strategy.Actions;
 import strategy.Strategy;
 
@@ -35,7 +33,8 @@ public class ListClasses<T> {
     }
 
     public void executeAll(int count) {
-        this.execute(Actions.LOAD_RANDOM.name, count);
+        if(!load.isEmpty())
+            this.execute(Actions.LOAD.name, count);
     }
 
 

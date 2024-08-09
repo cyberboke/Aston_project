@@ -5,9 +5,10 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 public enum Actions {
-    LOAD_RANDOM("load"),
-    LOAD_FILE("load"),
-    LOAD_CONSOLE("load");
+    LOAD("load"),
+    SORT("sort"),
+    SEARCH("search");
+
 
     public final String name;
     Actions(String name){
