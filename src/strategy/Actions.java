@@ -7,7 +7,7 @@ import java.util.function.Function;
 public enum Actions {
     LOAD_RANDOM("load"),
     LOAD_FILE("load"),
-    LOAD_USER("load");
+    LOAD_CONSOLE("load");
 
     public final String name;
     Actions(String name){

@@ -13,7 +13,7 @@ public class LoaderFactory {
         return switch (loader) {
             case LOAD_RANDOM -> new RandomLoader<>();
             case LOAD_FILE -> new FileLoader<>();
-            //case BARREL -> new BarrelFactory();
+            case LOAD_CONSOLE -> new ConsoleLoader<>();
             default -> throw new IllegalArgumentException("Unknown type recourse: " + loader);
         };
     }

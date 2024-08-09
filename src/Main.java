@@ -70,5 +70,25 @@ public class Main {
         list1.list.forEach(System.out::println);
 
 
+        /*
+        консоль
+         */
+        System.out.println();
+        System.out.println("===============STRATEGY================");
+        System.out.println("================Console===============");
+        Classes type2 = Classes.ANIMAL; // иммитация выбора пользователя
+        ListClasses<?> list2 = ListClasses.generateList(type2);
+        Actions action2 = Actions.LOAD_CONSOLE; // иммитация выбора источника данных
+        action2.addStrategy(list2.load::add, (count)->
+                LoaderFactory.getFactory(action2).load(type2, count)
+        );
+        try {
+            list2.executeAll(10);
+        }
+        catch (IllegalArgumentException e){
+            System.err.println(e);
+        }
+        list2.list.forEach(System.out::println);
+
     }
 }
