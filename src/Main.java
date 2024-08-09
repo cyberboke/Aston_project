@@ -2,6 +2,7 @@ import customClasses.Animal;
 import customClasses.Barrel;
 import customClasses.Person;
 import customClasses.enums.Classes;
+import customClasses.enums.TypeLoad;
 import customClasses.factory.RandomCreatable;
 import customClasses.factory.RandomFactory;
 import customClasses.factory.loader.LoaderFactory;
@@ -39,11 +40,11 @@ public class Main {
         /*
         реализация факрики через стратегию
          */
-        Classes type = Classes.ANIMAL; // иммитация выбора пользователя
+        Classes type = Classes.PERSON; // иммитация выбора пользователя
         ListClasses<?> list = ListClasses.generateList(type);
-        Actions action = Actions.LOAD_RANDOM; // иммитация выбора источника данных
-        action.addStrategy(list.load::add, (count)->
-                LoaderFactory.getFactory(action).load(type, count)
+        TypeLoad typeLoad = TypeLoad.LOAD_RANDOM; // иммитация выбора источника данных
+        Actions.LOAD.addStrategy(list.load::add, (count)->
+                LoaderFactory.getFactory(typeLoad).load(type, count)
         );
         try {
             list.executeAll(10);
@@ -55,11 +56,11 @@ public class Main {
 
         System.out.println("================File===============");
 
-        Classes type1 = Classes.PERSON; // иммитация выбора пользователя
+        Classes type1 = Classes.ANIMAL; // иммитация выбора пользователя
         ListClasses<?> list1 = ListClasses.generateList(type1);
-        Actions action1 = Actions.LOAD_FILE; // иммитация выбора источника данных
-        action1.addStrategy(list1.load::add, (count)->
-                LoaderFactory.getFactory(action1).load(type1, count)
+        TypeLoad typeLoad1 = TypeLoad.LOAD_FILE; // иммитация выбора источника данных
+        Actions.LOAD.addStrategy(list1.load::add, (count)->
+                LoaderFactory.getFactory(typeLoad1).load(type1, count)
         );
         try {
             list1.executeAll(15);
