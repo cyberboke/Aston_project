@@ -1,29 +1,91 @@
-import customClasses.Animal;
-import customClasses.Barrel;
-import customClasses.Person;
-import customClasses.factory.RandomCreatable;
-import customClasses.factory.RandomFactory;
+import strategy.creationStrategy.ContextCreationStrategy;
+import strategy.creationStrategy.AnimalCreationStrategy;
+import strategy.creationStrategy.BarrelCreationStrategy;
+import strategy.creationStrategy.PersonCreationStrategy;
+import validation.DataType;
+import validation.Validator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
+    private static final Scanner sc = new Scanner(System.in);
+    static List<Object> list = new ArrayList<>();
+
     public static void main(String[] args) {
-        // для понимания инициализируем наши фабрики и потом с помощью них создаем объект на выбор
-        // Создание случайного животного
-        RandomCreatable<Animal> animalFactory = (RandomCreatable<Animal>) RandomFactory.getFactory("animal");
-        Animal randomAnimal = animalFactory.createRandom();
-        Animal randomAnimal2 = animalFactory.createRandom();
-        System.out.println(randomAnimal);
-        System.out.println(randomAnimal2);
 
-        // Создание случайного человека
-        RandomCreatable<Person> personFactory = (RandomCreatable<Person>) RandomFactory.getFactory("person");
-        Person randomPerson = personFactory.createRandom();
-        System.out.println(randomPerson);
+        while (true) {
+            showMainMenu();  // Показываем главное меню
+            String mainCommand = sc.nextLine().toLowerCase();  // Считываем команду пользователя
 
-        // Создание случайной бочки
-        RandomCreatable<Barrel> barrelFactory = (RandomCreatable<Barrel>) RandomFactory.getFactory("barrel");
-        Barrel randomBarrel = barrelFactory.createRandom();
-        System.out.println(randomBarrel);
+            switch (mainCommand) {
+                case "exit" -> {  // Завершение программы
+                    sc.close();
+                    return;
+                }
+                case "print" -> {  // Печать содержимого списка
+                    if (list.isEmpty()) {
+                        System.out.println("Список пуст.");
+                    } else {
+                        list.forEach(System.out::println);
+                    }
+                }
+                case "add" -> showSubMenu();  // Переход в подменю выбора объекта для добавления
+                default -> System.out.println("Неизвестная команда. Попробуйте снова.");
+            }
+        }
+    }
 
+    private static void showMainMenu() {
+        System.out.println("Главное меню:");
+        System.out.println("1. Введите 'add', чтобы добавить объект в список");
+        System.out.println("2. Введите 'print', чтобы вывести список");
+        System.out.println("3. Введите 'exit', чтобы выйти из программы");
+        System.out.print("Ваш выбор: ");
+    }
 
+    private static void showSubMenu() {
+        while (true) {
+            System.out.println("Выберите тип объекта для добавления:");
+            System.out.println("1. Введите 'person' для добавления Person");
+            System.out.println("2. Введите 'animal' для добавления Animal");
+            System.out.println("3. Введите 'barrel' для добавления Barrel");
+            System.out.println("4. Введите 'back', чтобы вернуться в главное меню");
+            System.out.print("Ваш выбор: ");
+            String subCommand = sc.nextLine().toLowerCase();
+
+            if (subCommand.equals("back")) {
+                return;  // Возврат в главное меню
+            }
+
+            ContextCreationStrategy<?> context = getContext(subCommand);
+            if (context != null) {
+                System.out.println("Сколько объектов вы хотите добавить в список?");
+                int count = number(sc.nextLine());
+                list.addAll(context.executeStrategy(count));  // Добавляем созданные объекты в список
+                System.out.println("Добавлено " + count + " объектов.");
+            } else {
+                System.out.println("Неизвестная команда. Попробуйте снова.");
+            }
+        }
+    }
+
+    private static int number(String st) {
+        if (Validator.isValidData(st, DataType.NUMBER)) {
+            return Integer.parseInt(st);  // Преобразуем строку в число
+        } else {
+            System.out.println("Введите целое положительное число!");
+            return number(sc.nextLine());  // Повторный запрос ввода, если ввод некорректен
+        }
+    }
+
+    private static ContextCreationStrategy<?> getContext(String type) {
+        return switch (type) {
+            case "person" -> new ContextCreationStrategy<>(new PersonCreationStrategy());
+            case "animal" -> new ContextCreationStrategy<>(new AnimalCreationStrategy());
+            case "barrel" -> new ContextCreationStrategy<>(new BarrelCreationStrategy());
+            default -> null;
+        };
     }
 }
