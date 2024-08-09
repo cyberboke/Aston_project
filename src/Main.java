@@ -1,42 +1,22 @@
-import customClasses.Animal;
-import customClasses.Barrel;
-import customClasses.Person;
+
 import customClasses.enums.Classes;
-import customClasses.enums.TypeLoad;
-import customClasses.factory.RandomCreatable;
-import customClasses.factory.RandomFactory;
+import customClasses.enums.*;
 import customClasses.factory.loader.LoaderFactory;
 import strategy.Actions;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import strategy.creationStrategy.ContextCreationStrategy;
+import validation.DataType;
+import validation.Validator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 
 public class Main {
+    private static final Scanner sc = new Scanner(System.in);
+    static List<Object> myList = new ArrayList<>();
+
     public static void main(String[] args) {
-        // для понимания инициализируем наши фабрики и потом с помощью них создаем объект на выбор
-        // Создание случайного животного
-        RandomCreatable<Animal> animalFactory = (RandomCreatable<Animal>) RandomFactory.getFactory(Classes.ANIMAL);
-        Animal randomAnimal = animalFactory.createRandom();
-        Animal randomAnimal2 = animalFactory.createRandom();
-        System.out.println(randomAnimal);
-        System.out.println(randomAnimal2);
 
-        // Создание случайного человека
-        RandomCreatable<Person> personFactory = (RandomCreatable<Person>) RandomFactory.getFactory(Classes.PERSON);
-        Person randomPerson = personFactory.createRandom();
-        System.out.println(randomPerson);
-
-        // Создание случайной бочки
-        RandomCreatable<Barrel> barrelFactory = (RandomCreatable<Barrel>) RandomFactory.getFactory(Classes.BARREL);
-        Barrel randomBarrel = barrelFactory.createRandom();
-        System.out.println(randomBarrel);
-
-        System.out.println();
-        System.out.println("===============STRATEGY================");
-        System.out.println("================Random===============");
         /*
         реализация факрики через стратегию
          */
@@ -69,7 +49,54 @@ public class Main {
             System.err.println(e);
         }
         list1.list.forEach(System.out::println);
+/*-----------------------------------------------------------------*/
+        // Тест на стратегию по добавлению объектов заполненных рандомно
+        while (true) {
+            printMenu();
+            String command = sc.nextLine().toLowerCase();
 
+            switch (command) {
+                case "exit" -> {
+                    sc.close();
+                    return;
+                }
+                case "print" -> {
+                    if (myList == null || myList.isEmpty()) {
+                        System.out.println("Список пуст.");
+                    } else {
+                        myList.forEach(System.out::println);
+                    }
+                }
+                default -> {
+                    ContextCreationStrategy<?> context = ContextCreationStrategy.getContext(command);
+                    if (context != null) {
+                        System.out.println("Сколько объектов ты хочешь добавить в список?");
+                        int count = number(sc.nextLine());
+                        myList.addAll(context.executeStrategy(count));
+                        System.out.println("Добавлено " + count + " объектов.");
+                    } else {
+                        System.out.println("Неизвестная команда");
+                    }
+                }
+            }
+        }
+    }
 
+    private static int number(String st) {
+        if (Validator.isValidData(st, DataType.NUMBER)) {
+            return Integer.parseInt(st);
+        } else {
+            System.out.println("Введите целое положительное число!");
+            return number(sc.nextLine());
+        }
+    }
+
+    private static void printMenu() {
+        System.out.println("Введите команду:");
+        System.out.println("person - Работа с Person");
+        System.out.println("animal - Работа с Animal");
+        System.out.println("barrel - Работа с Barrel");
+        System.out.println("print - Показать текущий список");
+        System.out.println("exit - Выйти из программы");
     }
 }
