@@ -1,9 +1,4 @@
-package strategy;
-
-import strategy.creationStrategy.AnimalCreationStrategy;
-import strategy.creationStrategy.BarrelCreationStrategy;
-import strategy.creationStrategy.CreationStrategy;
-import strategy.creationStrategy.PersonCreationStrategy;
+package strategy.creationStrategy;
 
 import java.util.HashMap;
 import java.util.List;

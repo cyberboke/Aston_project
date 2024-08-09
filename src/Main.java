@@ -1,16 +1,17 @@
 import customClasses.enums.Classes;
 import customClasses.factory.loader.LoaderFactory;
 import strategy.Actions;
-import strategy.ContextCreationStrategy;
+import strategy.creationStrategy.ContextCreationStrategy;
 import validation.DataType;
 import validation.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     private static final Scanner sc = new Scanner(System.in);
-    static List<?> myList;
+    static List<Object> myList = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -69,7 +70,7 @@ public class Main {
                     if (context != null) {
                         System.out.println("Сколько объектов ты хочешь добавить в список?");
                         int count = number(sc.nextLine());
-                        myList = context.executeStrategy(count);
+                        myList.addAll(context.executeStrategy(count));
                         System.out.println("Добавлено " + count + " объектов.");
                     } else {
                         System.out.println("Неизвестная команда");
