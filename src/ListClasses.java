@@ -2,9 +2,7 @@ import customClasses.Animal;
 import customClasses.Barrel;
 import customClasses.Person;
 import customClasses.enums.Classes;
-import customClasses.factory.AnimalFactory;
-import customClasses.factory.BarrelFactory;
-import customClasses.factory.PersonFactory;
+
 import strategy.Actions;
 import strategy.Strategy;
 
