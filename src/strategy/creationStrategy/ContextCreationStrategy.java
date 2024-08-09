@@ -12,4 +12,13 @@ public class ContextCreationStrategy<T> {
     public List<T> executeStrategy(int count) {
         return strategy.createMultiple(count);
     }
+
+    public static ContextCreationStrategy<?> getContext(String type) {
+        return switch (type) {
+            case "person" -> new ContextCreationStrategy<>(new PersonCreationStrategy());
+            case "animal" -> new ContextCreationStrategy<>(new AnimalCreationStrategy());
+            case "barrel" -> new ContextCreationStrategy<>(new BarrelCreationStrategy());
+            default -> null;
+        };
+    }
 }

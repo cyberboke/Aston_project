@@ -1,7 +1,5 @@
 import strategy.creationStrategy.ContextCreationStrategy;
-import strategy.creationStrategy.AnimalCreationStrategy;
-import strategy.creationStrategy.BarrelCreationStrategy;
-import strategy.creationStrategy.PersonCreationStrategy;
+
 import validation.DataType;
 import validation.Validator;
 
@@ -59,7 +57,7 @@ public class Main {
                 return;  // Возврат в главное меню
             }
 
-            ContextCreationStrategy<?> context = getContext(subCommand);
+            ContextCreationStrategy<?> context = ContextCreationStrategy.getContext(subCommand);
             if (context != null) {
                 System.out.println("Сколько объектов вы хотите добавить в список?");
                 int count = number(sc.nextLine());
@@ -78,14 +76,5 @@ public class Main {
             System.out.println("Введите целое положительное число!");
             return number(sc.nextLine());  // Повторный запрос ввода, если ввод некорректен
         }
-    }
-
-    private static ContextCreationStrategy<?> getContext(String type) {
-        return switch (type) {
-            case "person" -> new ContextCreationStrategy<>(new PersonCreationStrategy());
-            case "animal" -> new ContextCreationStrategy<>(new AnimalCreationStrategy());
-            case "barrel" -> new ContextCreationStrategy<>(new BarrelCreationStrategy());
-            default -> null;
-        };
     }
 }
