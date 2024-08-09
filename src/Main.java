@@ -1,22 +1,15 @@
-import customClasses.Animal;
-import customClasses.Barrel;
-import customClasses.Person;
+
 import customClasses.enums.Classes;
-import customClasses.factory.RandomCreatable;
-import customClasses.factory.RandomFactory;
+import customClasses.enums.*;
 import customClasses.factory.loader.LoaderFactory;
 import strategy.Actions;
 import strategy.creationStrategy.ContextCreationStrategy;
 import validation.DataType;
 import validation.Validator;
-
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class Main {
     private static final Scanner sc = new Scanner(System.in);

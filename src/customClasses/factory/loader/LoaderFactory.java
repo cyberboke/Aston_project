@@ -1,7 +1,5 @@
 package customClasses.factory.loader;
-
-import customClasses.enums.TypeLoad;
-import strategy.Actions;
+import customClasses.enums.*;
 
 public class LoaderFactory {
     public static Loader<?> getFactory(TypeLoad loader) {
