@@ -33,7 +33,8 @@ public class ListClasses<T> {
     }
 
     public void executeAll(int count) {
-        this.execute(Actions.LOAD_RANDOM.name, count);
+        if(!load.isEmpty())
+            this.execute(Actions.LOAD.name, count);
     }
 
 
