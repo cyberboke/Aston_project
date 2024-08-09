@@ -49,6 +49,28 @@ public class Main {
             System.err.println(e);
         }
         list1.list.forEach(System.out::println);
+
+              /*
+        консоль
+         */
+        System.out.println();
+        System.out.println("===============STRATEGY================");
+        System.out.println("================Console===============");
+        Classes typeAnimal = Classes.ANIMAL; // иммитация выбора пользователя
+        ListClasses<?> listConsole = ListClasses.generateList(typeAnimal);
+        TypeLoad typeLoadConsole = TypeLoad.LOAD_CONSOLE;  // иммитация выбора источника данных
+        Actions.LOAD.addStrategy(listConsole.load::add, (count)->
+                LoaderFactory.getFactory(typeLoadConsole).load(typeAnimal, count)
+        );
+        try {
+            listConsole.executeAll(10);
+        } catch (IllegalArgumentException e){
+            System.err.println(e);
+        }
+        listConsole.list.forEach(System.out::println);
+
+
+
 /*-----------------------------------------------------------------*/
         // Тест на стратегию по добавлению объектов заполненных рандомно
         while (true) {
