@@ -120,7 +120,7 @@ public class ConsoleLoader<T> implements Loader<T> {
             String str = input.nextLine();
             if ((!str.equals(""))
                     && (str != null)
-                    && (str.matches("^[a-zA-Z]*$"))) {
+                    && (str.matches("^[a-zA-Zа-яА-Я\\s\\-]*$"))) {
                 return str;
             }
             System.out.println("Enter a string of only letters ");
