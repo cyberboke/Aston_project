@@ -28,8 +28,8 @@ public class ConsoleLoader<T> implements Loader<T> {
 
                     System.out.println("Enter animal kind: ");
                     animalBuilder.kind(inputLine());
-                    System.out.println("Enter animal hair (true|false): ");
-                    animalBuilder.hair(inputBoolean());
+                    System.out.println("Enter animal hair (no|yes): ");
+                    animalBuilder.hair(inputBoolean("no", "yes"));
                     System.out.println("Enter animal eye: ");
                     printEnum(EyeColor.values());
 
@@ -65,10 +65,10 @@ public class ConsoleLoader<T> implements Loader<T> {
                     Person.Builder personBuilder = Person.builder();
                     System.out.println("Enter person surname: ");
                     personBuilder.surname(inputLine());
-                    System.out.println("Enter person gender (true|false): ");
-                    personBuilder.gender(inputBoolean());
-                    System.out.println("Enter person age (max - 99): ");
-                    personBuilder.age(inputInteger(99));
+                    System.out.println("Enter person gender (m - male | f - female): ");
+                    personBuilder.gender(inputBoolean("m", "f"));
+                    System.out.println("Enter person age (max - 120): ");
+                    personBuilder.age(inputInteger(120));
 
                     list.add((T) personBuilder.build());
                 }
@@ -80,14 +80,18 @@ public class ConsoleLoader<T> implements Loader<T> {
 
     }
 
-    private boolean inputBoolean() {
+    private boolean inputBoolean(String falseParam, String trueParam) {
         while (true) {
-            try {
-                return input.nextBoolean();
-            } catch (InputMismatchException e) {
-                System.out.println("Enter true or false");
-                input.nextLine();
+
+            String str = input.nextLine();
+            if(str.equals(falseParam)) {
+                return false;
+            } else if(str.equals(trueParam)) {
+                return true;
+            } else {
+                System.out.println("Enter " + falseParam + " or " + trueParam);
             }
+
 
         }
     }
@@ -97,17 +101,17 @@ public class ConsoleLoader<T> implements Loader<T> {
         while (true) {
             try {
                 int value = input.nextInt();
-                if (value > max) {
-                    System.out.println("Number should be less or equal: " + max);
+                if (value > max || value < 0) {
+                    System.out.println("Number should be between: 0 and " + max);
                     continue;
                 }
+
                 return value;
 
             } catch (InputMismatchException e) {
                 System.out.println("Enter a number");
                 input.nextLine();
             }
-
         }
     }
 
@@ -116,7 +120,7 @@ public class ConsoleLoader<T> implements Loader<T> {
             String str = input.nextLine();
             if ((!str.equals(""))
                     && (str != null)
-                    && (str.matches("^[a-zA-Z]*$"))) {
+                    && (str.matches("^[a-zA-Zа-яА-Я\\s\\-]*$"))) {
                 return str;
             }
             System.out.println("Enter a string of only letters ");
