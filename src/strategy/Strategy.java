@@ -1,11 +1,13 @@
 package strategy;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 public class Strategy<T> {
-    Map<String, T> map = new HashMap<>();
+    public Map<String, T> map = new LinkedHashMap<>();
 
     public void add(String name, T func) {
         this.map.put(name, func);
