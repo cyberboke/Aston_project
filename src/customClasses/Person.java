@@ -1,12 +1,19 @@
 package customClasses;
 
+import customClasses.comparators.*;
+
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Person implements Comparable<Person>, Serializable {
     private final boolean gender;
     private final int age;
     private final String surname;
+
+    private static final Comparator<Person> surnameComparator = new PersonSurnameComparator();
+    private static final Comparator<Person> ageComparator = new PersonAgeComparator();
+    private static final Comparator<Person> genderComparator = new PersonGenderComparator();
 
     private Person(boolean gender, int age, String surname) {
         this.gender = gender;
@@ -55,7 +62,7 @@ public class Person implements Comparable<Person>, Serializable {
     // по фамилии
     @Override
     public int compareTo(Person o) {
-        return this.surname.compareTo(o.surname);
+        return surnameComparator.thenComparing(ageComparator).thenComparing(genderComparator).compare(this, o);
     }
 
     public static class Builder {
