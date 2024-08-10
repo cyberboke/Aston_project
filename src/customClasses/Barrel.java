@@ -1,14 +1,20 @@
 package customClasses;
 
+import customClasses.comparators.*;
 import customClasses.enums.Material;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class Barrel implements Comparable<Barrel>, Serializable {
     private final int volume;
     private final String storedMaterial;
     private final Material material;
+
+    private static final Comparator<Barrel> volumeComparator = new BarrelVolumeComparator();
+    private static final Comparator<Barrel> materialComparator = new BarrelMaterialComparator();
+    private static final Comparator<Barrel> storedComparator = new BarrelStoredMaterialComparator();
 
     private Barrel(int volume, String storedMaterial, Material material) {
         this.volume = volume;
@@ -43,11 +49,7 @@ public class Barrel implements Comparable<Barrel>, Serializable {
 
     @Override
     public String toString() {
-        return "Barrel{" +
-                "volume=" + volume +
-                ", storedMaterial='" + storedMaterial + '\'' +
-                ", material=" + material +
-                '}';
+        return "Barrel{" + "volume=" + volume + ", storedMaterial='" + storedMaterial + '\'' + ", material=" + material + '}';
     }
 
     public static Builder builder() {
@@ -57,7 +59,7 @@ public class Barrel implements Comparable<Barrel>, Serializable {
     // по объему
     @Override
     public int compareTo(Barrel o) {
-        return Integer.compare(this.volume, o.volume);
+        return volumeComparator.thenComparing(materialComparator).thenComparing(storedComparator).compare(this, o);
     }
 
     public static class Builder {

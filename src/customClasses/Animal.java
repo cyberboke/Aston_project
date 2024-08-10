@@ -1,8 +1,10 @@
 package customClasses;
 
+import customClasses.comparators.*;
 import customClasses.enums.EyeColor;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Objects;
 
 
@@ -10,6 +12,10 @@ public class Animal implements Comparable<Animal>, Serializable {
     private final String kind;
     private final EyeColor eyeColor;
     private final boolean hair;
+
+    private static final Comparator<Animal> kindComparator = new AnimalKindComparator();
+    private static final Comparator<Animal> harComparator = new AnimalKindComparator();
+    private static final Comparator<Animal> eyeComparator = new AnimalEyeColorComparator();
 
     private Animal(String string, EyeColor eyeColor, boolean hair) {
         this.kind = string;
@@ -54,7 +60,7 @@ public class Animal implements Comparable<Animal>, Serializable {
     // по виду
     @Override
     public int compareTo(Animal o) {
-        return this.kind.compareTo(o.kind);
+        return kindComparator.thenComparing(harComparator).thenComparing(eyeComparator).compare(this, o);
     }
 
     public static Builder builder() {
