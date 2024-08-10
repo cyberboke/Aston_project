@@ -3,6 +3,7 @@ package strategy;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public enum Actions {
     LOAD("load"),
@@ -14,8 +15,8 @@ public enum Actions {
     Actions(String name){
         this.name = name;
     }
-    public void addStrategy(BiConsumer<String, Function> strategy,
-                            Function<Integer, List<?>> func) {
+    public void addStrategy(BiConsumer<String, Runnable> strategy,
+                            Runnable func) {
         strategy.accept(this.name, func);
     }
 }

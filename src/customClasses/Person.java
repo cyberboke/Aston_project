@@ -42,7 +42,7 @@ public class Person implements Comparable<Person>, Serializable {
     @Override
     public String toString() {
         return "Person{" +
-                "gender=" + gender +
+                "gender=" + (gender ? "man" : "woman") +
                 ", age=" + age +
                 ", surname='" + surname + '\'' +
                 '}';
