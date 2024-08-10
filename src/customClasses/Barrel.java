@@ -16,7 +16,7 @@ public class Barrel implements Comparable<Barrel>, Serializable {
         this.material = material;
     }
 
-    public double getVolume() {
+    public int getVolume() {
         return volume;
     }
 
