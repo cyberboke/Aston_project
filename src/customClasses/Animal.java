@@ -47,7 +47,7 @@ public class Animal implements Comparable<Animal>, Serializable {
         return "Animal{" +
                 "string='" + kind + '\'' +
                 ", eyeColor=" + eyeColor +
-                ", hair=" + hair +
+                ", hair=" + (hair ? "with hair" : "without hair") +
                 '}';
     }
 
