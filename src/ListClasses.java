@@ -9,10 +9,12 @@ import strategy.Strategy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class ListClasses<T> {
     List<T> list;
-    Strategy<Function<Integer, List<T>>> load;
+
+    Strategy<Runnable> strategy;
 
     public static ListClasses generateList(Classes type){
         return switch (type) {
@@ -25,16 +27,13 @@ public class ListClasses<T> {
 
     private ListClasses(){
         list = new ArrayList<>();
-        load = new Strategy<>();
+        strategy = new Strategy<>();
     }
-
-    private void execute(String name, int count) {
-        list = this.load.get(name).apply(count);
+    private void execute(String name) {
+           this.strategy.get(name).run();
     }
-
-    public void executeAll(int count) {
-        if(!load.isEmpty())
-            this.execute(Actions.LOAD.name, count);
+    public void executeAll() {
+        this.strategy.map.keySet().forEach(this::execute);
     }
 
 
