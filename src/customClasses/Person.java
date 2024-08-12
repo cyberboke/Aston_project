@@ -1,19 +1,15 @@
 package customClasses;
 
-import customClasses.comparators.*;
 
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class Person implements Comparable<Person>, Serializable {
+public class Person implements Comparable<Person>, EvenChecker, Serializable {
     private final boolean gender;
     private final int age;
     private final String surname;
 
-    private static final Comparator<Person> surnameComparator = new PersonSurnameComparator();
-    private static final Comparator<Person> ageComparator = new PersonAgeComparator();
-    private static final Comparator<Person> genderComparator = new PersonGenderComparator();
 
     private Person(boolean gender, int age, String surname) {
         this.gender = gender;
@@ -49,9 +45,9 @@ public class Person implements Comparable<Person>, Serializable {
     @Override
     public String toString() {
         return "Person{" +
-                "gender=" + (gender ? "man" : "woman") +
-                ", age=" + age +
-                ", surname='" + surname + '\'' +
+                "surname =\t'" + surname + "' \t " +
+                ", gender =\t" + (gender ? "man  " : "woman") +
+                ", age =\t" + age +
                 '}';
     }
 
@@ -62,7 +58,15 @@ public class Person implements Comparable<Person>, Serializable {
     // по фамилии
     @Override
     public int compareTo(Person o) {
-        return surnameComparator.thenComparing(ageComparator).thenComparing(genderComparator).compare(this, o);
+        return Comparator
+                .comparing(Person::getSurname)
+                .thenComparing(Person::getAge)
+                .thenComparing(Person::getGender).compare(this, o);
+    }
+
+    @Override
+    public boolean isEven() {
+        return gender; // по полу
     }
 
     public static class Builder {
