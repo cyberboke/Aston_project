@@ -1,6 +1,5 @@
 package customClasses;
 
-import customClasses.comparators.*;
 import enums.EyeColor;
 
 import java.io.Serializable;
@@ -8,14 +7,11 @@ import java.util.Comparator;
 import java.util.Objects;
 
 
-public class Animal implements Comparable<Animal>, Serializable {
+public class Animal implements Comparable<Animal>, EvenChecker, Serializable {
     private final String kind;
     private final EyeColor eyeColor;
     private final boolean hair;
 
-    private static final Comparator<Animal> kindComparator = new AnimalKindComparator();
-    private static final Comparator<Animal> harComparator = new AnimalKindComparator();
-    private static final Comparator<Animal> eyeComparator = new AnimalEyeColorComparator();
 
     private Animal(String string, EyeColor eyeColor, boolean hair) {
         this.kind = string;
@@ -51,20 +47,28 @@ public class Animal implements Comparable<Animal>, Serializable {
     @Override
     public String toString() {
         return "Animal{" +
-                "string='" + kind + '\'' +
-                ", eyeColor=" + eyeColor +
-                ", hair=" + (hair ? "with hair" : "without hair") +
+                "kind =\t'" + kind + '\'' + '\t' +
+                ", hair =\t" + (hair ? "with hair   " : "without hair") + '\t' +
+                ", eyeColor =\t" + eyeColor +
                 '}';
     }
 
     // по виду
     @Override
     public int compareTo(Animal o) {
-        return kindComparator.thenComparing(harComparator).thenComparing(eyeComparator).compare(this, o);
+        return Comparator
+                .comparing(Animal::getKind)
+                .thenComparing(Animal::isHair)
+                .thenComparing(Animal::getEyeColor).compare(this, o);
     }
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public boolean isEven() { // по шерсти
+        return hair;
     }
 
     public static class Builder {
