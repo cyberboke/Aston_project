@@ -1,12 +1,12 @@
-package customClasses.factory;
+package customClasses.factory.ramdom;
 
-import customClasses.enums.Classes;
+import enums.TypeClass;
 
 public class RandomFactory {
 
     private RandomFactory() {}
 
-    public static RandomCreatable<?> getFactory(Classes type) {
+    public static RandomCreatable<?> getFactory(TypeClass type) {
         return switch (type) {
             case ANIMAL -> new AnimalFactory();
             case PERSON -> new PersonFactory();

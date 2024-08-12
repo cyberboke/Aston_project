@@ -1,4 +1,4 @@
-package customClasses.factory;
+package customClasses.factory.ramdom;
 
 import customClasses.Person;
 

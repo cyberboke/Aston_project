@@ -1,7 +1,7 @@
 package customClasses;
 
 import customClasses.comparators.*;
-import customClasses.enums.EyeColor;
+import enums.EyeColor;
 
 import java.io.Serializable;
 import java.util.Comparator;

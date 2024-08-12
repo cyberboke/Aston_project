@@ -1,7 +1,7 @@
-package customClasses.factory;
+package customClasses.factory.ramdom;
 
 import customClasses.Animal;
-import customClasses.enums.EyeColor;
+import enums.EyeColor;
 
 import java.util.Random;
 

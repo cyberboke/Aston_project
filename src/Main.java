@@ -1,14 +1,9 @@
 
-import customClasses.Barrel;
-import customClasses.ListClasses;
-import customClasses.comparators.BarrelStoredMaterialComparator;
-import customClasses.enums.Classes;
-import customClasses.enums.*;
+import enums.TypeClass;
+import enums.*;
 import customClasses.factory.loader.LoaderFactory;
-import menu.Menu;
 import operation.TimSort;
 import strategy.Actions;
-import strategy.creationStrategy.ContextCreationStrategy;
 import validation.DataType;
 import validation.Validator;
 
@@ -23,8 +18,6 @@ public class Main {
     private static int count = 10;
 
     public static void main(String[] args) {
-
-        //Menu menu = new Menu();
         //menu.run();
 
         /*
@@ -82,11 +75,13 @@ public class Main {
 
         System.out.println("================TimSort===============");
 
-        Classes type2 = Classes.BARREL; // иммитация выбора пользователя
+
+
+        TypeClass type2 = TypeClass.ANIMAL; // иммитация выбора пользователя
         listClasses = ListClasses.generateList(type2);
 
-        TypeLoad typeLoad2 = TypeLoad.LOAD_CONSOLE; // иммитация выбора источника данных
-        count = 1;                                 // иммитация выбора количества объектов в массиве
+        TypeLoad typeLoad2 = TypeLoad.LOAD_RANDOM; // иммитация выбора источника данных
+        count = 5;                                 // иммитация выбора количества объектов в массиве
         Actions.LOAD.addStrategy(listClasses.strategy::add, ()-> {
             listClasses.list.clear();
             listClasses.list.addAll(

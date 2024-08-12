@@ -1,12 +1,7 @@
 package menu;
 
-import customClasses.ListClasses;
-import customClasses.enums.Classes;
-import customClasses.enums.TypeLoad;
-import customClasses.factory.loader.LoaderFactory;
-import strategy.Actions;
+import enums.TypeClass;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -14,9 +9,9 @@ public class Menu {
     MenuEntry mainEntry; // указатель на главный уровень меню
     MenuEntry currentEntry; //указатель на текущий уровень меню
 
-    Classes currentClass = Classes.PERSON;
+    TypeClass currentClass = TypeClass.PERSON;
     int count = 1;
-    ListClasses<?> listConsole;
+  /*  ListClasses<?> listConsole;
 
     public Menu() {
         this.mainEntry = new MenuEntry("Main Menu"); // создаем объект главного меню
@@ -74,7 +69,9 @@ public class Menu {
 
     }
     // Метод выводит текущий список меню
-    public void printEntries() {
+
+   */
+  public void printEntries() {
         System.out.println(currentEntry.getTitle() + " " + "(" + currentClass.name() + ")");
         // цикл перебирает пунты меню и выводит выбор пользователя
         for (int i = 0; i < currentEntry.getEntries().size(); i++) {

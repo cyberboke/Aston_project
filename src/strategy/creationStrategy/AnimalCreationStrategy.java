@@ -1,7 +1,7 @@
 package strategy.creationStrategy;
 
 import customClasses.Animal;
-import customClasses.enums.EyeColor;
+import enums.EyeColor;
 
 import java.util.ArrayList;
 import java.util.List;
