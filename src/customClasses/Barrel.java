@@ -1,20 +1,16 @@
 package customClasses;
 
-import customClasses.comparators.*;
 import enums.Material;
 
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class Barrel implements Comparable<Barrel>, Serializable {
+public class Barrel implements Comparable<Barrel>, EvenChecker, Serializable {
     private final int volume;
     private final String storedMaterial;
     private final Material material;
 
-    private static final Comparator<Barrel> volumeComparator = new BarrelVolumeComparator();
-    private static final Comparator<Barrel> materialComparator = new BarrelMaterialComparator();
-    private static final Comparator<Barrel> storedComparator = new BarrelStoredMaterialComparator();
 
     private Barrel(int volume, String storedMaterial, Material material) {
         this.volume = volume;
@@ -49,7 +45,11 @@ public class Barrel implements Comparable<Barrel>, Serializable {
 
     @Override
     public String toString() {
-        return "Barrel{" + "volume=" + volume + ", storedMaterial='" + storedMaterial + '\'' + ", material=" + material + '}';
+        return "Barrel{" +
+                "volume =\t" + volume + '\t' +
+                ", material =\t" + material + "     \t" +
+                ", storedMaterial =\t'" + storedMaterial + '\'' +
+                '}';
     }
 
     public static Builder builder() {
@@ -59,7 +59,15 @@ public class Barrel implements Comparable<Barrel>, Serializable {
     // по объему
     @Override
     public int compareTo(Barrel o) {
-        return volumeComparator.thenComparing(materialComparator).thenComparing(storedComparator).compare(this, o);
+        return Comparator
+                .comparing(Barrel::getVolume)
+                .thenComparing(Barrel::getMaterial)
+                .thenComparing(Barrel::getStoredMaterial).compare(this, o);
+    }
+
+    @Override
+    public boolean isEven() {
+        return material.ordinal() % 2 == 0; // по номеру материала
     }
 
     public static class Builder {
