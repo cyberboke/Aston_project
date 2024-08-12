@@ -19,13 +19,15 @@ public class ConsoleLoader<T> implements Loader<T> {
     public List<T> load(Classes type, int count) {
         List<T> list = new ArrayList<>();
 
+        //выбор типа объекта для заполнения
         switch (type) {
             case ANIMAL -> {
                 for (int i = 0; i < count; i++) {
                     System.out.println("Enter animal " + (i + 1) + "/" + count);
 
-                    Animal.Builder animalBuilder = Animal.builder();
+                    Animal.Builder animalBuilder = Animal.builder();// создание объекта
 
+                    //заполнение полей объекта
                     System.out.println("Enter animal kind: ");
                     animalBuilder.kind(inputLine());
                     System.out.println("Enter animal hair (no|yes): ");
@@ -33,9 +35,11 @@ public class ConsoleLoader<T> implements Loader<T> {
                     System.out.println("Enter animal eye: ");
                     printEnum(EyeColor.values());
 
+                    //считывание значения enum
                     animalBuilder.eyeColor(EyeColor.values()[inputInteger(EyeColor.values().length - 1)]);
                     input.nextLine();
 
+                    //добавляем созданный объект в лист
                     list.add((T) animalBuilder.build());
 
                 }
@@ -75,11 +79,16 @@ public class ConsoleLoader<T> implements Loader<T> {
             }
         }
 
-
         return list;
 
     }
 
+    /**
+     * ввод значения boolean
+     * @param falseParam - символ для false значения
+     * @param trueParam - символ для true значения
+     * @return - введенное значение
+     */
     private boolean inputBoolean(String falseParam, String trueParam) {
         while (true) {
 
@@ -91,12 +100,14 @@ public class ConsoleLoader<T> implements Loader<T> {
             } else {
                 System.out.println("Enter " + falseParam + " or " + trueParam);
             }
-
-
         }
     }
 
-
+    /**
+     * ввод значения int
+     * @param max - максимально допустимое значение
+     * @return - введенное значение
+     */
     private int inputInteger(int max) {
         while (true) {
             try {
@@ -115,9 +126,14 @@ public class ConsoleLoader<T> implements Loader<T> {
         }
     }
 
+    /**
+     * ввод значения String
+     * @return - введенное значение
+     */
     private String inputLine() {
         while (true) {
             String str = input.nextLine();
+            // regexp: латинские и русские буквы, пробел, тире
             if ((!str.equals(""))
                     && (str != null)
                     && (str.matches("^[a-zA-Zа-яА-Я\\s\\-]*$"))) {
@@ -128,6 +144,11 @@ public class ConsoleLoader<T> implements Loader<T> {
         }
     }
 
+    /**
+     * вывод enum
+      * @param enumValues - массив значения enum
+     * @param <T> - тип enum
+     */
     private <T extends Enum<T>> void printEnum(T[] enumValues) {
         for (int i = 0; i < enumValues.length; i++) {
             System.out.println(i + "." + enumValues[i].name());

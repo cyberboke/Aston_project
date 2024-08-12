@@ -1,15 +1,11 @@
-import customClasses.Animal;
-import customClasses.Barrel;
-import customClasses.Person;
+package customClasses;
+
 import customClasses.enums.Classes;
 
-import strategy.Actions;
 import strategy.Strategy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 public class ListClasses<T> {
     List<T> list;
@@ -36,5 +32,15 @@ public class ListClasses<T> {
         this.strategy.map.keySet().forEach(this::execute);
     }
 
+    public Strategy<Runnable> getStrategy() {
+        return strategy;
+    }
 
+    public List<T> getList() {
+        return list;
+    }
+
+    public void setList(List<T> list) {
+        this.list = list;
+    }
 }

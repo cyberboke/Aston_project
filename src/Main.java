@@ -1,9 +1,11 @@
 
 import customClasses.Barrel;
+import customClasses.ListClasses;
 import customClasses.comparators.BarrelStoredMaterialComparator;
 import customClasses.enums.Classes;
 import customClasses.enums.*;
 import customClasses.factory.loader.LoaderFactory;
+import menu.Menu;
 import operation.TimSort;
 import strategy.Actions;
 import strategy.creationStrategy.ContextCreationStrategy;
@@ -21,6 +23,9 @@ public class Main {
     private static int count = 10;
 
     public static void main(String[] args) {
+
+        //Menu menu = new Menu();
+        //menu.run();
 
         /*
         реализация факрики через стратегию
