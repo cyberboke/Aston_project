@@ -1,7 +1,7 @@
 package strategy.creationStrategy;
 
 import customClasses.Barrel;
-import customClasses.enums.Material;
+import enums.Material;
 
 import java.util.ArrayList;
 import java.util.List;

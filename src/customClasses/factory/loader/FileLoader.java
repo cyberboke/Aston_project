@@ -1,9 +1,8 @@
 package customClasses.factory.loader;
 
-import customClasses.enums.Classes;
+import enums.TypeClass;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class FileLoader<T> implements Loader<T>{
     @Override
-    public List<T> load(Classes type, int count) {
+    public List<T> load(TypeClass type, int count) {
         List<T> list = new ArrayList<>();
         try(FileInputStream fileInputStream= new FileInputStream(type.filePath);
             ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {

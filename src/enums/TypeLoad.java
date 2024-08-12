@@ -1,4 +1,4 @@
-package customClasses.enums;
+package enums;
 
 public enum TypeLoad {
     LOAD_RANDOM,

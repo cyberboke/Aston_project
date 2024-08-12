@@ -1,7 +1,7 @@
 package customClasses;
 
 import customClasses.comparators.*;
-import customClasses.enums.Material;
+import enums.Material;
 
 import java.io.Serializable;
 import java.util.Comparator;

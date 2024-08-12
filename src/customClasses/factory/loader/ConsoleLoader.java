@@ -3,9 +3,9 @@ package customClasses.factory.loader;
 import customClasses.Animal;
 import customClasses.Barrel;
 import customClasses.Person;
-import customClasses.enums.Classes;
-import customClasses.enums.EyeColor;
-import customClasses.enums.Material;
+import enums.TypeClass;
+import enums.EyeColor;
+import enums.Material;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -16,7 +16,7 @@ public class ConsoleLoader<T> implements Loader<T> {
     Scanner input = new Scanner(System.in);
 
     @Override
-    public List<T> load(Classes type, int count) {
+    public List<T> load(TypeClass type, int count) {
         List<T> list = new ArrayList<>();
 
         //выбор типа объекта для заполнения

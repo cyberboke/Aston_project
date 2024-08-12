@@ -1,7 +1,7 @@
-package customClasses.factory;
+package customClasses.factory.ramdom;
 
 import customClasses.Barrel;
-import customClasses.enums.Material;
+import enums.Material;
 
 import java.util.Random;
 

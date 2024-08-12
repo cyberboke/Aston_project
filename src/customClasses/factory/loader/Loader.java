@@ -1,9 +1,9 @@
 package customClasses.factory.loader;
 
-import customClasses.enums.Classes;
+import enums.TypeClass;
 
 import java.util.List;
 
 public interface Loader<T> {
-    List<T> load(Classes type, int count);
+    List<T> load(TypeClass type, int count);
 }

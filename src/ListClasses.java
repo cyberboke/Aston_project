@@ -1,6 +1,7 @@
-package customClasses;
-
-import customClasses.enums.Classes;
+import customClasses.Animal;
+import customClasses.Barrel;
+import customClasses.Person;
+import enums.TypeClass;
 
 import strategy.Strategy;
 
@@ -12,7 +13,7 @@ public class ListClasses<T> {
 
     Strategy<Runnable> strategy;
 
-    public static ListClasses generateList(Classes type){
+    public static ListClasses generateList(TypeClass type){
         return switch (type) {
             case ANIMAL -> new ListClasses<Animal>();
             case PERSON -> new ListClasses<Person>();
