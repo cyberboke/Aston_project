@@ -1,9 +1,9 @@
 package enums;
 
 public enum TypeClass {
-    ANIMAL("ANIMAL_file.txt"),
-    PERSON("PEOPLE_file.txt"),
-    BARREL("BARREL_file.txt");
+    ANIMAL("res//ANIMAL_file.ser"),
+    PERSON("res//PEOPLE_file.ser"),
+    BARREL("res//BARREL_file.ser");
     public final String filePath;
 
     TypeClass(String file) {

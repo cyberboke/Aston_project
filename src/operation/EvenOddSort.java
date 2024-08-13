@@ -1,54 +1,47 @@
 package operation;
 
+import customClasses.EvenChecker;
+import customClasses.factory.loader.LoaderFactory;
+import enums.TypeClass;
+import enums.TypeLoad;
+
 import java.util.*;
 
 public class EvenOddSort {
 
-    public static void main(String[] args) {
-        List<Integer> list = new ArrayList<>(
-                Arrays.asList(5,8,9,4,1,0,7,2,3,6)
-        );
-        System.out.println(list);
-        sort(list, false);
-        System.out.println(list);
-    }
-
-    public static <T extends Comparable<? super T>> void sort(List<Integer> list, boolean even) {
+    public static <T extends EvenChecker<? super T>> void sort(List<T> list, boolean even) {
         evenSort(list,even, null);
     }
 
-    public static <T> void sort(List<Integer> list, boolean even, Comparator<? super Integer> comparator) {
+    public static <T> void sort(List<T> list, boolean even, Comparator<? super T> comparator) {
         evenSort(list, even, comparator);
     }
-    private static <T> void evenSort(List<Integer> list, boolean even, Comparator<? super T> comparator) {
-        Map<Integer, Integer> notSortEl = new LinkedHashMap<>();
+    private static <T> void evenSort(List<T> list, boolean even, Comparator<? super T> comparator) {
+        Map<Integer, T> notSortEl = new LinkedHashMap<>();
         chooseElement(list, notSortEl, even);
-        Collections.sort(list);
+        Collections.sort(list, comparator);
         notSortEl.forEach(list::add);
     }
 
-    private static <T> void chooseElement(List<Integer> list, Map<Integer, Integer> map, boolean even){
-        List<Integer> newList = new ArrayList<>();
+    private static <T> void chooseElement(List<T> list, Map<Integer, T> map, boolean even){
+        List<T> newList = new ArrayList<>();
         if(even){
             for (int i = 0; i < list.size(); i++){
-                int item = (int) list.get(i);
-                if (item % 2 == 0){
+                T item = list.get(i);
+                if (((EvenChecker<?>)item).isEven())
                     newList.add(item);
-                }
-                else{
+                else
                     map.put(i, item);
-                }
             }
         }
-        else {for (int i = 0; i < list.size(); i++){
-            int item = (int) list.get(i);
-            if (item % 2 != 0){
-                newList.add(item);
+        else {
+            for (int i = 0; i < list.size(); i++){
+                T item = list.get(i);
+                if (!((EvenChecker<?>)item).isEven())
+                    newList.add(item);
+                else
+                    map.put(i, item);
             }
-            else{
-                map.put(i, item);
-            }
-        }
         }
         list.clear();
         list.addAll(newList);
