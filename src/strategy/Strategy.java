@@ -22,7 +22,7 @@ public class Strategy<T> {
         if(!keys.contains(key))
             throw new RuntimeException("No action " + key);
     }
-    public boolean isEmpty(){
-        return map.isEmpty();
+    public void remove(String name){
+        this.map.remove(name);
     }
 }
