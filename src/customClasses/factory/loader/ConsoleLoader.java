@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleLoader<T> implements Loader<T> {
-    Scanner input = new Scanner(System.in);
+    private static Scanner input = new Scanner(System.in);
 
     @Override
     public List<T> load(TypeClass type, int count) {
@@ -33,10 +33,9 @@ public class ConsoleLoader<T> implements Loader<T> {
                     System.out.println("Enter animal hair (no|yes): ");
                     animalBuilder.hair(inputBoolean("no", "yes"));
                     System.out.println("Enter animal eye: ");
-                    printEnum(EyeColor.values());
-
                     //считывание значения enum
-                    animalBuilder.eyeColor(EyeColor.values()[inputInteger(EyeColor.values().length - 1)]);
+                    animalBuilder.eyeColor(ConsoleLoader.inputEnum(EyeColor.values()));
+
                     input.nextLine();
 
                     //добавляем созданный объект в лист
@@ -49,10 +48,7 @@ public class ConsoleLoader<T> implements Loader<T> {
                     System.out.println("Enter barrel " + (i + 1) + "/" + count);
                     Barrel.Builder barrelBuilder = Barrel.builder();
                     System.out.println("Enter barrel material: ");
-                    printEnum(Material.values());
-
-
-                    barrelBuilder.material(Material.values()[inputInteger(Material.values().length - 1)]);
+                    barrelBuilder.material(ConsoleLoader.inputEnum(Material.values()));
 
                     System.out.println("Enter barrel volume (max = 1000): ");
                     barrelBuilder.volume(inputInteger(1000));
@@ -89,7 +85,7 @@ public class ConsoleLoader<T> implements Loader<T> {
      * @param trueParam - символ для true значения
      * @return - введенное значение
      */
-    private boolean inputBoolean(String falseParam, String trueParam) {
+    public static boolean inputBoolean(String falseParam, String trueParam) {
         while (true) {
 
             String str = input.nextLine();
@@ -108,12 +104,22 @@ public class ConsoleLoader<T> implements Loader<T> {
      * @param max - максимально допустимое значение
      * @return - введенное значение
      */
-    private int inputInteger(int max) {
+    public static int inputInteger(int max) {
+        return inputInteger(0, max);
+    }
+
+    /**
+     * ввод значения int
+     * @param min - минимально допустимое значение
+     * @param max - максимально допустимое значение
+     * @return - введенное значение
+     */
+    public static int inputInteger(int min, int max) {
         while (true) {
             try {
                 int value = input.nextInt();
-                if (value > max || value < 0) {
-                    System.out.println("Number should be between: 0 and " + max);
+                if (value > max || value < min) {
+                    System.out.println("Number should be between: " + min + " and " + max);
                     continue;
                 }
 
@@ -130,7 +136,7 @@ public class ConsoleLoader<T> implements Loader<T> {
      * ввод значения String
      * @return - введенное значение
      */
-    private String inputLine() {
+    public static String inputLine() {
         while (true) {
             String str = input.nextLine();
             // regexp: латинские и русские буквы, пробел, тире
@@ -149,10 +155,21 @@ public class ConsoleLoader<T> implements Loader<T> {
       * @param enumValues - массив значения enum
      * @param <T> - тип enum
      */
-    private <T extends Enum<T>> void printEnum(T[] enumValues) {
+    public static <T extends Enum<T>> void printEnum(T[] enumValues) {
         for (int i = 0; i < enumValues.length; i++) {
             System.out.println(i + "." + enumValues[i].name());
         }
+    }
+
+    /**
+     * ввод enum
+     * @param enumValues - массив значения enum
+     * @return - выбранный enum
+     * @param <T> - тип enum
+     */
+    public static <T extends Enum<T>> T inputEnum(T[] enumValues) {
+        printEnum(enumValues);
+        return enumValues[inputInteger(enumValues.length - 1)];
     }
 }
 
