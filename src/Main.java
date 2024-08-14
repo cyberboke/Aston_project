@@ -61,6 +61,9 @@ public class Main {
         catch (RuntimeException e){
             System.err.println(e);
         }
+
+        Actions.LOAD.removeStrategy(listClasses.strategy::remove); // Удаление действия из стратегии
+
         listClasses.list.forEach(System.out::println);
 
     }
