@@ -33,6 +33,8 @@ public class Main {
                             LoaderFactory.getFactory(typeLoad2).load(typeClass, count)
                     );
                 });
+                listClasses.execute(Actions.LOAD.name);
+                Actions.LOAD.removeStrategy(listClasses.strategy::remove);
 
                 do {
                     typeAction = Menu.choosingAction();
@@ -74,7 +76,6 @@ public class Main {
                     Actions.SORT.removeStrategy(listClasses.strategy::remove);
                     Actions.SEARCH.removeStrategy(listClasses.strategy::remove);
                 } while (typeChoice == TypeChoice.TYPE_ACTION);
-                Actions.LOAD.removeStrategy(listClasses.strategy::remove);
             } while (typeChoice == TypeChoice.TYPE_LOAD);
         } while (typeChoice == TypeChoice.TYPE_CLASS);
     }
