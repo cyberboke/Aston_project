@@ -14,10 +14,13 @@ public class BinarySearch {
             var current = array.get(middle);
             //сравниваем элементы
             var compareResult = current.compareTo(element);
+            // нашли элемент - возвращаем его индекс
             if (compareResult == 0) {
                 return middle;
+            // текущий элемент меньше искомого - сдвигаем левую границу
             } else if (compareResult < 0) {
                 left = middle + 1;
+            // иначе сдвигаем правую границу
             } else {
                 right = middle - 1;
             }
