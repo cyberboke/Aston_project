@@ -11,7 +11,6 @@ import java.util.*;
 
 
 public class Menu {
-    static Scanner input = new Scanner(System.in);
 
     /**
      * Ввод типа объекта
@@ -122,89 +121,43 @@ public class Menu {
         List<Comparator<?>> comparators = ComparatorRegistry.getComparators(typeClass);
         switch (typeClass) {
             case ANIMAL:
-                System.out.println("1 - Kind, 2 - Eye, 3 - Hair: ");
+                System.out.println("0 - default, 1 - Kind, 2 - Eye, 3 - Hair: ");
                 break;
             case PERSON:
-                System.out.println("1 - Age, 2 - Surname, 3 - Gender: ");
+                System.out.println("0 - default, 1 - Age, 2 - Surname, 3 - Gender: ");
                 break;
             case BARREL:
-                System.out.println("1 - StoredMaterial, 2 - Material, 3 - Volume: ");
+                System.out.println("0 - default, 1 - StoredMaterial, 2 - Material, 3 - Volume: ");
                 break;
         }
-        int input = ConsoleLoader.inputInteger(1, comparators.size());
+        int input = ConsoleLoader.inputInteger(0, comparators.size());
+        if(input == 0) return null;
         return comparators.get(input - 1);
     }
 
     /**
-     * Заполнение поля для поиска по списку animal
-     * @param comparator - компоратор
-     * @return - объект animal
+     * Создание объекта для поиска
+     * @param typeClass - тип объекта
+     * @return - объект Object
      */
-    public static Animal fillAnimal(Comparator comparator) {
-        Animal animal = null;
-        switch (comparator.toString()) {
-            case "AnimalKindComparator":
-                System.out.println("Input kind of animal: ");
-                animal = Animal.builder().kind(ConsoleLoader.inputLine()).build();
-                break;
-            case "AnimalEyeColorComparator":
-                System.out.println("Input eye color of animal: ");
-                animal = Animal.builder().eyeColor(ConsoleLoader.inputEnum(EyeColor.values())).build();
-                break;
-            case "AnimalHairComparator":
-                System.out.println("Input hair of animal (no or yes): ");
-                animal = Animal.builder().hair(ConsoleLoader.inputBoolean("no", "yes")).build();
-                break;
-        }
-        return animal;
-    }
-
-    /**
-     * Заполнение поля для поиска по списку person
-     * @param comparator - компоратор
-     * @return - объект person
-     */
-    public static Person fillPerson(Comparator comparator) {
-        Person person = null;
-        switch (comparator.toString()) {
-            case "PersonAgeComparator":
-                System.out.println("Input age of person (max - 120): ");
-                person = Person.builder().age(ConsoleLoader.inputInteger(120)).build();
-                break;
-            case "PersonGenderComparator":
-                System.out.println("Input gender of person (m - male | f - female): ");
-                person = Person.builder().gender(ConsoleLoader.inputBoolean("m", "f")).build();
-                break;
-            case "PersonSurnameComparator":
-                System.out.println("Input surname of person: ");
-                person = Person.builder().surname(ConsoleLoader.inputLine()).build();
-                break;
-        }
-        return person;
-    }
-
-    /**
-     * Заполнение поля для поиска по списку barrel
-     * @param comparator - компоратор
-     * @return - объект barrel
-     */
-    public static Barrel fillBarrel(Comparator comparator) {
-        Barrel barrel = null;
-        switch (comparator.toString()) {
-            case "BarrelMaterialComparator":
-                System.out.println("Input material of barrel: ");
-                barrel = Barrel.builder().material(ConsoleLoader.inputEnum(Material.values())).build();
-                break;
-            case "BarrelStoredMaterialComparator":
-                System.out.println("Input stored material of barrel: ");
-                barrel = Barrel.builder().storageMaterial(ConsoleLoader.inputLine()).build();
-                break;
-            case "BarrelVolumeComparator":
-                System.out.println("Input volume of barrel (max - 1000): ");
-                barrel = Barrel.builder().volume(ConsoleLoader.inputInteger(1000)).build();
-                break;
-        }
-        return barrel;
+    public static Object createObject(TypeClass typeClass){
+        return switch (typeClass) {
+            case ANIMAL -> Animal.builder().
+                    kind(ConsoleLoader.inputLine()).
+                    hair(ConsoleLoader.inputBoolean("no", "yes")).
+                    eyeColor(ConsoleLoader.inputEnum(EyeColor.values())).
+                    build();
+            case PERSON -> Person.builder().
+                    surname(ConsoleLoader.inputLine()).
+                    gender(ConsoleLoader.inputBoolean("m", "f")).
+                    age(ConsoleLoader.inputInteger(120)).
+                    build();
+            case BARREL -> Barrel.builder().
+                    material(ConsoleLoader.inputEnum(Material.values())).
+                    volume(ConsoleLoader.inputInteger(1000)).
+                    storageMaterial(ConsoleLoader.inputLine()).
+                    build();
+        };
     }
 
     /**
