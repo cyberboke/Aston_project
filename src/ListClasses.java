@@ -26,7 +26,7 @@ public class ListClasses<T> {
         list = new ArrayList<>();
         strategy = new Strategy<>();
     }
-    private void execute(String name) {
+    public void execute(String name) {
            this.strategy.get(name).run();
     }
     public void executeAll() {
