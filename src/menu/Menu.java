@@ -1,105 +1,236 @@
 package menu;
 
-import enums.TypeClass;
+import customClasses.Animal;
+import customClasses.Barrel;
+import customClasses.Person;
+import customClasses.comparators.registry.ComparatorRegistry;
+import customClasses.factory.loader.ConsoleLoader;
+import enums.*;
 
-import java.util.Scanner;
+import java.util.*;
+
 
 public class Menu {
-    boolean isExit = false; // флаг выхода из программы
-    MenuEntry mainEntry; // указатель на главный уровень меню
-    MenuEntry currentEntry; //указатель на текущий уровень меню
+    static Scanner input = new Scanner(System.in);
 
-    TypeClass currentClass = TypeClass.PERSON;
-    int count = 1;
-  /*  ListClasses<?> listConsole;
+    /**
+     * Ввод типа объекта
+     * @return
+     */
+    public static TypeClass choosingClass() {
+        TypeClass typeClass = null;
+        System.out.println("Choose a class: 1 - Animal , 2 - Person, 3 - Barrel: ");
+        int select = ConsoleLoader.inputInteger(1, TypeClass.values().length);
 
-    public Menu() {
-        this.mainEntry = new MenuEntry("Main Menu"); // создаем объект главного меню
-        this.currentEntry = mainEntry; // текущему уромню меню присваивается главный уровень
-
-        // заполняем первый уровень меню
-        MenuEntry selectTypeEntry = new MenuEntry("Select type");
-        MenuEntry operationsEntry = new MenuEntry("Operations");
-
-        mainEntry.getEntries().add(selectTypeEntry);
-        mainEntry.getEntries().add(operationsEntry);
-
-        // уровень меню Select type
-        MenuEntry personEntry = new MenuEntry("Person", () -> { this.currentClass = Classes.PERSON;});
-        MenuEntry animalEntry = new MenuEntry("Animal", () -> { this.currentClass = Classes.ANIMAL;});
-        MenuEntry barrelEntry = new MenuEntry("Barrel", () -> { this.currentClass = Classes.BARREL;});
-        selectTypeEntry.getEntries().add(personEntry);
-        selectTypeEntry.getEntries().add(animalEntry);
-        selectTypeEntry.getEntries().add(barrelEntry);
-
-        // уровень меню Operations
-        MenuEntry loadEntry = new MenuEntry("Load");
-        MenuEntry updateEntry = new MenuEntry("Update");
-        MenuEntry printEntry = new MenuEntry("Print", () -> {
-            if (this.listConsole != null) {
-                this.listConsole.getList().forEach(System.out::println);
-            }
-        });
-        operationsEntry.getEntries().add(loadEntry);
-        operationsEntry.getEntries().add(updateEntry);
-        operationsEntry.getEntries().add(printEntry);
-
-        // уровень меню Load
-        MenuEntry fileEntry = new MenuEntry("File");
-        MenuEntry randomEntry = new MenuEntry("Random");
-        MenuEntry consoleEntry = new MenuEntry("Console", () -> {
-            // вызываем ConsoleLoader
-            this.listConsole = ListClasses.generateList(this.currentClass);
-            TypeLoad typeLoadConsole = TypeLoad.LOAD_CONSOLE;  // иммитация выбора источника данных
-            Actions.LOAD.addStrategy(listConsole.getStrategy()::add,
-                    () -> {
-                        List filledList = LoaderFactory.getFactory(typeLoadConsole).load(this.currentClass, this.count);
-                        this.listConsole.setList(filledList);
-            });
-
-            try {
-                listConsole.executeAll();
-            } catch (IllegalArgumentException e){
-                System.err.println(e);
-            }
-        });
-        loadEntry.getEntries().add(fileEntry);
-        loadEntry.getEntries().add(randomEntry);
-        loadEntry.getEntries().add(consoleEntry);
-
-    }
-    // Метод выводит текущий список меню
-
-   */
-  public void printEntries() {
-        System.out.println(currentEntry.getTitle() + " " + "(" + currentClass.name() + ")");
-        // цикл перебирает пунты меню и выводит выбор пользователя
-        for (int i = 0; i < currentEntry.getEntries().size(); i++) {
-            System.out.println(i + " " + currentEntry.getEntries().get(i).getTitle());
-
+        switch (select) {
+            case 1:
+                typeClass = TypeClass.ANIMAL;
+                break;
+            case 2:
+                typeClass = TypeClass.PERSON;
+                break;
+            case 3:
+                typeClass = TypeClass.BARREL;
+                break;
         }
-        // Добавление пункта Exit в конец каждого вывода
-        System.out.println(currentEntry.getEntries().size() + " Exit");
-
+        return typeClass;
     }
 
-    public void run() {
-        // Бесконечный цикл, пока не нажали кнопку выход
-        Scanner input = new Scanner(System.in);
-        while (!isExit) {
-            currentEntry.run();
-            printEntries();
+    /**
+     * Ввод размера массива
+     * @return
+     */
+    public static int choosingSize(){
+        System.out.println("Choose size of list (min = 1, max = 100): ");
+        return ConsoleLoader.inputInteger(1, 100);
+    }
 
-            int choice = input.nextInt(); // считываем выбор пользователя
-            if (choice < currentEntry.getEntries().size()) {
-                this.currentEntry = this.currentEntry.getEntries().get(choice); // изменение текущего меню на выбор пользователя
-            } else {
-                if (this.currentEntry == this.mainEntry) {
-                    this.isExit = true; // выбран Exit из главного меню, программа завершается
-                } else {
-                    this.currentEntry = this.mainEntry; //изменение текущего меню на главный пункт меню
-                }
-            }
+    /**
+     * Ввод типа загрузки
+     * @return
+     */
+    public static TypeLoad choosingLoad() {
+        TypeLoad typeLoad = null;
+        System.out.println("Choose type of load: 1 - Load random,  2 - Load file, 3 - Load console: ");
+        int select = ConsoleLoader.inputInteger(1, TypeLoad.values().length);
+
+        switch (select) {
+            case 1:
+                typeLoad = TypeLoad.LOAD_RANDOM;
+                break;
+            case 2:
+                typeLoad = TypeLoad.LOAD_FILE;
+                break;
+            case 3:
+                typeLoad = TypeLoad.LOAD_CONSOLE;
+                break;
         }
+        return typeLoad;
     }
+
+    /**
+     * Ввод типа действия над списком
+     * @return
+     */
+    public static TypeAction choosingAction() {
+        TypeAction typeAction = null;
+        System.out.println("Choose an action: 1 - Sort , 2 - Search: " );
+        int select = ConsoleLoader.inputInteger(1, TypeAction.values().length);
+
+        switch (select) {
+            case 1:
+                typeAction = TypeAction.SORT;
+                break;
+            case 2:
+                typeAction = TypeAction.SEARCH;
+                break;
+        }
+        return typeAction;
+    }
+
+    /**
+     * Ввод типа сортировки
+     * @return
+     */
+    public static TypeSort choosingSort() {
+        TypeSort typeSort = null;
+        System.out.println("Choose a sort: 1 - Timsort, 2 - Evensort, 3 - Oddsort: ");
+        int select = ConsoleLoader.inputInteger(1, TypeSort.values().length);
+
+        switch (select) {
+            case 1:
+                typeSort = TypeSort.TIMSORT;
+                break;
+            case 2:
+                typeSort = TypeSort.EVENSORT;
+                break;
+            case 3:
+                typeSort = TypeSort.ODDSORT;
+                break;
+        }
+        return typeSort;
+    }
+
+
+    /**
+     * Выбор поля объекта для сортировки или поиска
+     * @param typeClass - тип объекта
+     * @return - возвращает компаратор
+     */
+    public static Comparator choosingComparator(TypeClass typeClass) {
+        System.out.println("Choose a field: ");
+        List<Comparator<?>> comparators = ComparatorRegistry.getComparators(typeClass);
+        switch (typeClass) {
+            case ANIMAL:
+                System.out.println("1 - Kind, 2 - Eye, 3 - Hair: ");
+                break;
+            case PERSON:
+                System.out.println("1 - Age, 2 - Surname, 3 - Gender: ");
+                break;
+            case BARREL:
+                System.out.println("1 - StoredMaterial, 2 - Material, 3 - Volume: ");
+                break;
+        }
+        int input = ConsoleLoader.inputInteger(1, comparators.size());
+        return comparators.get(input - 1);
+    }
+
+    /**
+     * Заполнение поля для поиска по списку animal
+     * @param comparator - компоратор
+     * @return - объект animal
+     */
+    public static Animal fillAnimal(Comparator comparator) {
+        Animal animal = null;
+        switch (comparator.toString()) {
+            case "AnimalKindComparator":
+                System.out.println("Input kind of animal: ");
+                animal = Animal.builder().kind(ConsoleLoader.inputLine()).build();
+                break;
+            case "AnimalEyeColorComparator":
+                System.out.println("Input eye color of animal: ");
+                animal = Animal.builder().eyeColor(ConsoleLoader.inputEnum(EyeColor.values())).build();
+                break;
+            case "AnimalHairComparator":
+                System.out.println("Input hair of animal (no or yes): ");
+                animal = Animal.builder().hair(ConsoleLoader.inputBoolean("no", "yes")).build();
+                break;
+        }
+        return animal;
+    }
+
+    /**
+     * Заполнение поля для поиска по списку person
+     * @param comparator - компоратор
+     * @return - объект person
+     */
+    public static Person fillPerson(Comparator comparator) {
+        Person person = null;
+        switch (comparator.toString()) {
+            case "PersonAgeComparator":
+                System.out.println("Input age of person (max - 120): ");
+                person = Person.builder().age(ConsoleLoader.inputInteger(120)).build();
+                break;
+            case "PersonGenderComparator":
+                System.out.println("Input gender of person (m - male | f - female): ");
+                person = Person.builder().gender(ConsoleLoader.inputBoolean("m", "f")).build();
+                break;
+            case "PersonSurnameComparator":
+                System.out.println("Input surname of person: ");
+                person = Person.builder().surname(ConsoleLoader.inputLine()).build();
+                break;
+        }
+        return person;
+    }
+
+    /**
+     * Заполнение поля для поиска по списку barrel
+     * @param comparator - компоратор
+     * @return - объект barrel
+     */
+    public static Barrel fillBarrel(Comparator comparator) {
+        Barrel barrel = null;
+        switch (comparator.toString()) {
+            case "BarrelMaterialComparator":
+                System.out.println("Input material of barrel: ");
+                barrel = Barrel.builder().material(ConsoleLoader.inputEnum(Material.values())).build();
+                break;
+            case "BarrelStoredMaterialComparator":
+                System.out.println("Input stored material of barrel: ");
+                barrel = Barrel.builder().storageMaterial(ConsoleLoader.inputLine()).build();
+                break;
+            case "BarrelVolumeComparator":
+                System.out.println("Input volume of barrel (max - 1000): ");
+                barrel = Barrel.builder().volume(ConsoleLoader.inputInteger(1000)).build();
+                break;
+        }
+        return barrel;
+    }
+
+    /**
+     * Выбор изменения в работе со списком
+     * @return тип изменения
+     */
+    public static TypeChoice choosingChoice() {
+        TypeChoice typeChoice = null;
+        System.out.println("Choose an action 1 - Change class, 2 - Change load, 3 - Run action, 4 - Exit: ");
+        int select = ConsoleLoader.inputInteger(1, TypeChoice.values().length);
+
+        switch (select) {
+            case 1:
+                typeChoice = TypeChoice.TYPE_CLASS;
+                break;
+            case 2:
+                typeChoice = TypeChoice.TYPE_LOAD;
+                break;
+            case 3:
+                typeChoice = TypeChoice.TYPE_ACTION;
+                break;
+            case 4:
+                typeChoice = TypeChoice.EXIT;
+                break;
+        }
+        return typeChoice;
+    }
+
 }

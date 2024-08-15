@@ -1,8 +1,11 @@
 
 import customClasses.Animal;
+import customClasses.Barrel;
+import customClasses.Person;
 import enums.TypeClass;
 import enums.*;
 import customClasses.factory.loader.LoaderFactory;
+import menu.Menu;
 import operation.BinarySearch;
 import operation.EvenOddSort;
 import operation.TimSort;
@@ -15,6 +18,27 @@ public class Main {
     private static int count = 10;
 
     public static void main(String[] args) {
+
+        /*
+        TypeClass typeClass = Menu.choosingClass();
+        int size = Menu.choosingSize();
+        TypeLoad typeLoad = Menu.choosingLoad();
+        TypeAction typeAction = Menu.choosingAction();
+        Comparator comparator = Menu.choosingComparator(typeClass);
+
+        if (typeAction == TypeAction.SORT) {
+            TypeSort typeSort = Menu.choosingSort();
+        } else {
+            switch (typeClass) {
+                case ANIMAL: Animal animal = Menu.fillAnimal(comparator); break;
+                case PERSON: Person person = Menu.fillPerson(comparator); break;
+                case BARREL: Barrel barrel = Menu.fillBarrel(comparator); break;
+            }
+        }
+
+        TypeChoice typeChoice = Menu.choosingChoice();
+        */
+
 
         TypeClass type2 = TypeClass.ANIMAL; // иммитация выбора пользователя
         listClasses = ListClasses.generateList(type2);
