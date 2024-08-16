@@ -41,7 +41,7 @@ public class Main {
                 });
                 //выполняем загрузку
                 listClasses.execute(Actions.LOAD.name);
-                //удаляем загрузку из стратегии
+                //удаляем способ загрузки из стратегии, чтобы список не обновлялся при изменении действия
                 Actions.LOAD.removeStrategy(listClasses.strategy::remove);
 
                 do {

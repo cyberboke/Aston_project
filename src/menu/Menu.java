@@ -160,7 +160,7 @@ public class Menu {
                 System.out.println("Enter person surname: ");
                 personBuilder.surname(ConsoleLoader.inputLine());
                 System.out.println("Enter person gender (m - male | f - female): ");
-                personBuilder.gender(ConsoleLoader.inputBoolean("m", "f"));
+                personBuilder.gender(ConsoleLoader.inputBoolean("f", "m"));
                 System.out.println("Enter person age (max - 120): ");
                 personBuilder.age(ConsoleLoader.inputInteger(120));
                 obj = personBuilder.build();

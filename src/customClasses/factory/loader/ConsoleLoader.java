@@ -66,7 +66,7 @@ public class ConsoleLoader<T> implements Loader<T> {
                     System.out.println("Enter person surname: ");
                     personBuilder.surname(inputLine());
                     System.out.println("Enter person gender (m - male | f - female): ");
-                    personBuilder.gender(inputBoolean("m", "f"));
+                    personBuilder.gender(inputBoolean("f", "m"));
                     System.out.println("Enter person age (max - 120): ");
                     personBuilder.age(inputInteger(120));
 
