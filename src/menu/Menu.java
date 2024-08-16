@@ -141,23 +141,43 @@ public class Menu {
      * @return - объект Object
      */
     public static Object createObject(TypeClass typeClass){
-        return switch (typeClass) {
-            case ANIMAL -> Animal.builder().
-                    kind(ConsoleLoader.inputLine()).
-                    hair(ConsoleLoader.inputBoolean("no", "yes")).
-                    eyeColor(ConsoleLoader.inputEnum(EyeColor.values())).
-                    build();
-            case PERSON -> Person.builder().
-                    surname(ConsoleLoader.inputLine()).
-                    gender(ConsoleLoader.inputBoolean("m", "f")).
-                    age(ConsoleLoader.inputInteger(120)).
-                    build();
-            case BARREL -> Barrel.builder().
-                    material(ConsoleLoader.inputEnum(Material.values())).
-                    volume(ConsoleLoader.inputInteger(1000)).
-                    storageMaterial(ConsoleLoader.inputLine()).
-                    build();
+        Object obj = null;
+        switch (typeClass) {
+            case ANIMAL -> {
+                Animal.Builder animalBuilder = Animal.builder();// создание объекта
+                //заполнение полей объекта
+                System.out.println("Enter animal kind: ");
+                animalBuilder.kind(ConsoleLoader.inputLine());
+                System.out.println("Enter animal hair (no|yes): ");
+                animalBuilder.hair(ConsoleLoader.inputBoolean("no", "yes"));
+                System.out.println("Enter animal eye: ");
+                //считывание значения enum
+                animalBuilder.eyeColor(ConsoleLoader.inputEnum(EyeColor.values()));
+                obj = animalBuilder.build();
+            }
+            case PERSON -> {
+                Person.Builder personBuilder = Person.builder();
+                System.out.println("Enter person surname: ");
+                personBuilder.surname(ConsoleLoader.inputLine());
+                System.out.println("Enter person gender (m - male | f - female): ");
+                personBuilder.gender(ConsoleLoader.inputBoolean("m", "f"));
+                System.out.println("Enter person age (max - 120): ");
+                personBuilder.age(ConsoleLoader.inputInteger(120));
+                obj = personBuilder.build();
+            }
+            case BARREL ->{
+                Barrel.Builder barrelBuilder = Barrel.builder();
+                System.out.println("Enter barrel material: ");
+                barrelBuilder.material(ConsoleLoader.inputEnum(Material.values()));
+
+                System.out.println("Enter barrel volume (max = 1000): ");
+                barrelBuilder.volume(ConsoleLoader.inputInteger(1000));
+                System.out.println("Enter barrel storageMaterial: ");
+                barrelBuilder.storageMaterial(ConsoleLoader.inputLine());
+                obj =  barrelBuilder.build();
+            }
         };
+        return obj;
     }
 
     /**
